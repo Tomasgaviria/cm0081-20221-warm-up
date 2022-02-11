@@ -1,10 +1,6 @@
 module Main where
 import Numeric.Natural
-import Test.QuickCheck
-import Test.QuickCheck.Arbitrary()
-instance Arbitrary Natural where
- arbitrary = arbitrarySizedNatural
- shrink = shrinkIntegral
+
  main :: IO ()
 fac n = if n == 0 
            then 1
