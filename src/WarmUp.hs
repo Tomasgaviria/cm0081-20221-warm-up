@@ -14,8 +14,16 @@ prop_fac :: [Natural -> Natural] -> Natural -> Bool
 prop_fac [] a = True 
 prop_fac (x:xs) a = aux (x) a && prop_fac (xs) a
 
+--This function takes a given list of functions and compares it whit one
+--already defined function "aux". Recursively it calls itself once again 
+--just until the list is empty. 
+
 aux :: (Natural -> Natural) -> Natural -> Bool  
 aux l a = l a == fac a
+
+--This is an auxiliar function to compare the fac funcionts whit
+--the base factorial function
+
 
 fac :: Natural -> Natural
 fac n = product [1..n]   {-(1)-}
