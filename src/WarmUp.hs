@@ -1,8 +1,21 @@
 module Main where
 import Numeric.Natural
+import Test.QuickCheck
+import Test.QuickCheck.Arbitrary()
+
+instance Arbitrary Natural where
+ arbitrary = arbitrarySizedNatural
+ shrink = shrinkIntegral
 
 main :: IO()
-main = print(fac1 5, fac2 5, fac3 5, fac4 5, fac5 5)
+main = quickCheck $ prop_fac[fac1, fac2, fac3, fac4, fac5]
+
+prop_fac :: [Natural -> Natural] -> Natural -> Bool 
+prop_fac [] a = True 
+prop_fac (x:xs) a = aux (x) a && prop_fac (xs) a
+
+aux :: (Natural -> Natural) -> Natural -> Bool  
+aux l a = l a == fac a
 
 fac :: Natural -> Natural
 fac n = product [1..n]   {-(1)-}
@@ -42,7 +55,7 @@ fac4 = foldr (*) 1 . enumFromTo 1  {-(2)-}
 --functions foldr and enumFromTo. foldr allows the factorial to be 
 --solved by step by step multiply the numbers that enumFromTo function generates.
 --enumFromTo creates a list of the numbers starting in the first parameter you give
---and ending in the second parameter
+--and ending in the second parameter(3)
 
 
 fac5 :: Natural -> Natural
